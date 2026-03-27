@@ -14,7 +14,7 @@ public class ArticuloRepositoryAdapter implements ArticuloRepositoryPort {
     public Articulo getById(int id) throws Exception {
         StringBuilder sql = new StringBuilder();
         sql.append(" SELECT id, nombre, codigo");
-        sql.append(" FROM articulos WHERE id = ?");
+        sql.append(" FROM almacen.articulo WHERE id = ?");
         PreparedStatement stmt = DB.getConnection().prepareStatement(sql.toString());
         stmt.setInt(1, id);
         var rs = stmt.executeQuery();
@@ -28,7 +28,7 @@ public class ArticuloRepositoryAdapter implements ArticuloRepositoryPort {
     public List<Articulo> getAll() throws Exception {
         StringBuilder sql = new StringBuilder();
         sql.append(" SELECT id, nombre, codigo");
-        sql.append(" FROM articulos");
+        sql.append(" FROM almacen.articulo");
         PreparedStatement stmt = DB.getConnection().prepareStatement(sql.toString());
         var rs = stmt.executeQuery();
         List<Articulo> articulos = new ArrayList<>();
@@ -43,7 +43,7 @@ public class ArticuloRepositoryAdapter implements ArticuloRepositoryPort {
     @Override
     public void save(Articulo articulo) throws Exception {
         StringBuilder sql = new StringBuilder();
-        sql.append(" INSERT INTO articulos (id, nombre, codigo)");
+        sql.append(" INSERT INTO almacen.articulo (id, nombre, codigo)");
         sql.append(" VALUES (?, ?, ?)") ;
         sql.append(" ON CONFLICT (id)");
         sql.append(" DO UPDATE SET ");

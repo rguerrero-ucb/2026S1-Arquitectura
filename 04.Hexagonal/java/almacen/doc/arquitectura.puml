@@ -1,0 +1,56 @@
+@startuml arquitectura_hexagonal
+
+title Arquitectura Hexagonal - Sistema de Almacén
+
+package "Cliente/Entrada" {
+    [Cliente] as cliente
+}
+
+package "Capa de Aplicación" {
+    interface "ArticuloUseCase" as PortArticuloUseCase
+    [ArticuloUseCaseImpl] as ArticuloUseCaseImpl
+}
+
+package "Núcleo de Dominio" {
+    [Articulo] as ArticuloDomain
+    interface "ArticuloRepositoryPort" as PortArticuloRepository
+}
+
+package "Capa de Infraestructura"  {
+    [ArticuloRepositoryAdapter] as ArticuloAdapter
+    [BD: PGSQL] as BD
+}
+
+' Conexiones - Entrada (Puerto Primario)
+cliente --> PortArticuloUseCase
+PortArticuloUseCase <|-- ArticuloUseCaseImpl
+
+' Conexiones - Lógica de aplicación a dominio
+ArticuloUseCaseImpl --> ArticuloDomain
+ArticuloUseCaseImpl --> PortArticuloRepository
+
+' Conexiones - Salida (Puerto Secundario)
+PortArticuloRepository <|-- ArticuloAdapter
+ArticuloAdapter --> BD
+
+note right of cliente
+    Usuario o Sistema Externo
+    que quiere usar los casos de uso
+end note
+
+note bottom of PortArticuloUseCase
+    Puerto de Entrada (Primario)
+    Define qué puede hacer el sistema
+end note
+
+note bottom of PortArticuloRepository
+    Puerto de Salida (Secundario)
+    Abstrae la persistencia
+end note
+
+note right of BD
+    Infraestructura Externa
+    (Base de datos)
+end note
+
+@enduml

@@ -12,7 +12,7 @@ public class DB {
             return null;
         }
         try {
-            return java.sql.DriverManager.getConnection("jdbc:postgresql://localhost:5432/ucb_almacen", "ucb", "Tarija00");
+            return java.sql.DriverManager.getConnection("jdbc:postgresql://localhost:5432/ucb", "ucb", "Tarija00");
         } catch (java.sql.SQLException e) {
             System.out.println("Error connecting to PostgreSQL database.");
             e.printStackTrace();

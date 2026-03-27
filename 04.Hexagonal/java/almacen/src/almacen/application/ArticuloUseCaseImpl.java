@@ -1,5 +1,8 @@
 package almacen.application;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import almacen.domain.Articulo;
 import almacen.domain.ArticuloRepositoryPort;
 
@@ -15,5 +18,15 @@ public class ArticuloUseCaseImpl implements ArticuloUseCase {
         articuloRepository.save(articulo);
 
         return articulo;
+    }
+
+    @Override
+    public List<ArticuloDTO> getAll() throws Exception {
+        List<Articulo> articulos = this.articuloRepository.getAll();
+        List<ArticuloDTO> articulosDTO = new ArrayList<>();
+        for (Articulo articulo : articulos) {
+            articulosDTO.add(new ArticuloDTO(articulo.getNombre()));
+        }
+        return articulosDTO;
     }
 }
