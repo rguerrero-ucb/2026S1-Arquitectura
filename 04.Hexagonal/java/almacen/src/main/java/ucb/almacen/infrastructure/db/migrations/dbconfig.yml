@@ -1,0 +1,5 @@
+development:
+  dialect: postgres
+  datasource: postgres://ucb:Tarija00@localhost/ucb?sslmode=disable
+  dir: ./
+  table: sql_migrations
